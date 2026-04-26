@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>AUDHISTORY / Settings</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Theme variables ── */
+
+    :root {
+      --bg:           #0a0a0a;
+      --bg-input:     #0f0f0f;
+      --border-main:  #181818;
+      --border-input: #1e1e1e;
+      --border-focus: #5a0000;
+      --text:         #c0c0c0;
+      --text-label:   #666;
+      --text-hint:    #333;
+      --accent:       #8b0000;
+      --accent2:      #cc4400;
+      --btn-border:   #222;
+      --btn-text:     #555;
+      --check-bg:     #0f0f0f;
+    }
+
+    :root[data-theme="light"] {
+      --bg:           #f0efeb;
+      --bg-input:     #ffffff;
+      --border-main:  #ddd;
+      --border-input: #ccc;
+      --border-focus: #8b0000;
+      --text:         #1a1a1a;
+      --text-label:   #888;
+      --text-hint:    #aaa;
+      --accent:       #8b0000;
+      --accent2:      #cc4400;
+      --btn-border:   #ccc;
+      --btn-text:     #777;
+      --check-bg:     #fff;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 13px;
+      padding: 36px 40px;
+      max-width: 560px;
+      min-height: 100vh;
+      visibility: hidden;
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 16px;
+      letter-spacing: 5px;
+      margin-bottom: 36px;
+      border-bottom: 1px solid var(--border-main);
+      padding-bottom: 14px;
+    }
+
+    .section {
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      color: var(--text-label);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    textarea,
+    input[type="number"] {
+      background: var(--bg-input);
+      border: 1px solid var(--border-input);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 12px;
+      padding: 8px 10px;
+      outline: none;
+      border-radius: 2px;
+    }
+
+    textarea:focus,
+    input[type="number"]:focus {
+      border-color: var(--border-focus);
+    }
+
+    textarea {
+      width: 100%;
+      height: 110px;
+      resize: vertical;
+    }
+
+    input[type="number"] {
+      width: 90px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="checkbox"] {
+      accent-color: var(--accent);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .hint {
+      color: var(--text-hint);
+      font-size: 10px;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* ── Toggle buttons (language / theme) ── */
+
+    .toggle-group {
+      display: inline-flex;
+    }
+
+    .toggle-btn {
+      background: none;
+      border: 1px solid var(--btn-border);
+      color: var(--btn-text);
+      font-family: inherit;
+      font-size: 11px;
+      padding: 5px 18px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: border-color 0.1s, color 0.1s;
+    }
+
+    .toggle-btn + .toggle-btn {
+      border-left: none;
+    }
+
+    .toggle-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .toggle-btn:not(.active):hover {
+      border-color: var(--accent2);
+      color: var(--accent2);
+    }
+
+    /* ── Actions ── */
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 36px;
+      border-top: 1px solid var(--border-main);
+      padding-top: 24px;
+    }
+
+    button.action-btn {
+      background: none;
+      border: 1px solid var(--btn-border);
+      color: var(--btn-text);
+      font-family: inherit;
+      font-size: 11px;
+      padding: 7px 16px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      border-radius: 1px;
+      transition: border-color 0.1s, color 0.1s;
+    }
+
+    button.action-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent2);
+    }
+
+    button.action-btn.primary {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    button.action-btn.primary:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .status {
+      font-size: 10px;
+      color: var(--accent);
+      min-height: 14px;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <h1>AUDHISTORY</h1>
+
+  <!-- Language -->
+  <div class="section">
+    <label data-i18n="language_label">Язык / Language</label>
+    <div class="toggle-group">
+      <button class="toggle-btn lang-btn active" data-val="ru">RU</button>
+      <button class="toggle-btn lang-btn"        data-val="en">EN</button>
+    </div>
+  </div>
+
+  <!-- Theme -->
+  <div class="section">
+    <label data-i18n="theme_label">Тема / Theme</label>
+    <div class="toggle-group">
+      <button class="toggle-btn theme-btn active" data-val="dark"  data-i18n="dark">Тёмная</button>
+      <button class="toggle-btn theme-btn"        data-val="light" data-i18n="light">Светлая</button>
+    </div>
+  </div>
+
+  <!-- Blacklist -->
+  <div class="section">
+    <label data-i18n="blacklist_label">Чёрный список доменов</label>
+    <textarea id="blacklist" placeholder="ads.example.com&#10;tracker.site.com"></textarea>
+    <p class="hint" data-i18n="blacklist_hint">// по домену на строку — медиа с этих сайтов не сохраняется</p>
+  </div>
+
+  <!-- Min duration -->
+  <div class="section">
+    <label data-i18n="min_duration_label">Мин. длительность (секунд)</label>
+    <input type="number" id="min-duration" min="0" max="3600" value="30">
+    <p class="hint" data-i18n="min_duration_hint">// медиа короче этого игнорируется (реклама, shorts)</p>
+  </div>
+
+  <!-- Thumbnails -->
+  <div class="section">
+    <label data-i18n="thumbnails_label">Превью видео</label>
+    <div class="checkbox-row">
+      <input type="checkbox" id="capture-thumb" checked>
+      <span data-i18n="thumbnails_check">Снимать превью через canvas</span>
+    </div>
+    <p class="hint" data-i18n="thumbnails_hint">// отключи чтобы сэкономить место — dataURL весят много</p>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <button class="action-btn primary" id="save" data-i18n="save_btn">[СОХРАНИТЬ]</button>
+    <button class="action-btn"         id="clear-all" data-i18n="clear_btn">[СТЕРЕТЬ ВСЁ]</button>
+    <span class="status" id="status"></span>
+  </div>
+
+  <script>
+    const SETTINGS_KEY = 'audhistory_settings';
+    const ENTRIES_KEY  = 'audhistory_entries';
+
+    const I18N = {
+      ru: {
+        language_label:   'Язык / Language',
+        theme_label:      'Тема / Theme',
+        dark:             'Тёмная',
+        light:            'Светлая',
+        blacklist_label:  'Чёрный список доменов',
+        blacklist_hint:   '// по домену на строку — медиа с этих сайтов не сохраняется',
+        min_duration_label: 'Мин. длительность (секунд)',
+        min_duration_hint:  '// медиа короче этого игнорируется (реклама, shorts)',
+        thumbnails_label: 'Превью видео',
+        thumbnails_check: 'Снимать превью через canvas',
+        thumbnails_hint:  '// отключи чтобы сэкономить место — dataURL весят много',
+        save_btn:         '[СОХРАНИТЬ]',
+        clear_btn:        '[СТЕРЕТЬ ВСЁ]',
+        confirm_clear:    'Удалить все медиа? Отменить нельзя.',
+        saved:            '// сохранено.',
+        cleared:          '// очищено.',
+      },
+      en: {
+        language_label:   'Language',
+        theme_label:      'Theme',
+        dark:             'Dark',
+        light:            'Light',
+        blacklist_label:  'Domain blacklist',
+        blacklist_hint:   '// one domain per line — media from these domains won\'t be saved',
+        min_duration_label: 'Min duration (seconds)',
+        min_duration_hint:  '// media shorter than this is ignored (ads, shorts)',
+        thumbnails_label: 'Video thumbnails',
+        thumbnails_check: 'Capture previews via canvas',
+        thumbnails_hint:  '// disable to save storage — thumbnails can be large (dataURL)',
+        save_btn:         '[SAVE]',
+        clear_btn:        '[CLEAR ALL DATA]',
+        confirm_clear:    'Delete ALL tracked media? Cannot be undone.',
+        saved:            '// saved.',
+        cleared:          '// cleared.',
+      },
+    };
+
+    let lang  = 'ru';
+    let theme = 'dark';
+
+    function t(key) {
+      return (I18N[lang] || I18N.en)[key] ?? I18N.en[key] ?? key;
+    }
+
+    function applyLang() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t(el.dataset.i18n);
+      });
+    }
+
+    function applyTheme(val) {
+      theme = val;
+      document.documentElement.dataset.theme = val;
+    }
+
+    function setActiveBtn(selector, activeVal) {
+      document.querySelectorAll(selector).forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.val === activeVal);
+      });
+    }
+
+    function flash(msg) {
+      const el = document.getElementById('status');
+      el.textContent = msg;
+      setTimeout(() => { el.textContent = ''; }, 2000);
+    }
+
+    async function patchSetting(key, value) {
+      const r = await chrome.storage.local.get(SETTINGS_KEY);
+      const s = r[SETTINGS_KEY] || {};
+      s[key] = value;
+      await chrome.storage.local.set({ [SETTINGS_KEY]: s });
+    }
+
+    // Language toggle — apply + save immediately
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        lang = btn.dataset.val;
+        setActiveBtn('.lang-btn', lang);
+        applyLang();
+        await patchSetting('language', lang);
+      });
+    });
+
+    // Theme toggle — apply + save immediately
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        applyTheme(btn.dataset.val);
+        setActiveBtn('.theme-btn', theme);
+        await patchSetting('theme', theme);
+      });
+    });
+
+    // Save other settings
+    document.getElementById('save').addEventListener('click', async () => {
+      const blacklist = document.getElementById('blacklist').value
+        .split('\n').map(s => s.trim()).filter(Boolean);
+      const minDuration   = parseInt(document.getElementById('min-duration').value, 10) || 30;
+      const captureThumb  = document.getElementById('capture-thumb').checked;
+      await chrome.storage.local.set({
+        [SETTINGS_KEY]: { blacklist, minDuration, captureThumb, language: lang, theme },
+      });
+      flash(t('saved'));
+    });
+
+    // Clear all data
+    document.getElementById('clear-all').addEventListener('click', async () => {
+      if (!confirm(t('confirm_clear'))) return;
+      await chrome.storage.local.remove(ENTRIES_KEY);
+      flash(t('cleared'));
+    });
+
+    // Init
+    async function init() {
+      const r = await chrome.storage.local.get(SETTINGS_KEY);
+      const s = r[SETTINGS_KEY] || {};
+
+      lang  = s.language || 'ru';
+      theme = s.theme    || 'dark';
+
+      applyTheme(theme);
+      setActiveBtn('.lang-btn',  lang);
+      setActiveBtn('.theme-btn', theme);
+      applyLang();
+
+      document.getElementById('blacklist').value      = (s.blacklist || []).join('\n');
+      document.getElementById('min-duration').value   = s.minDuration ?? 30;
+      document.getElementById('capture-thumb').checked = s.captureThumb ?? true;
+
+      document.body.style.visibility = '';
+    }
+
+    init();
+  </script>
+</body>
+</html>
