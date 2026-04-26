@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AUDHISTORY</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-left">
+      <span class="logo">AUDHISTORY</span>
+      <span class="count" id="count">[0 записей]</span>
+    </div>
+    <button class="settings-btn" id="settings-btn" title="Настройки">⚙</button>
+  </div>
+
+  <div class="search-wrap">
+    <input type="text" id="search" class="search" placeholder="// поиск по заголовкам, доменам...">
+  </div>
+
+  <div class="feed" id="feed">
+    <div class="empty">// нет отслеженных медиа</div>
+  </div>
+
+  <div class="footer">
+    <button class="btn" id="clear-all">[ОЧИСТИТЬ ВСЁ]</button>
+    <button class="btn" id="export-json">[ЭКСПОРТ JSON]</button>
+  </div>
+
+  <script src="state.js"></script>
+  <script src="formatTime.js"></script>
+  <script src="escapeHtml.js"></script>
+  <script src="buildCard.js"></script>
+  <script src="filterEntries.js"></script>
+  <script src="render.js"></script>
+  <script src="load.js"></script>
+  <script src="events.js"></script>
+</body>
+</html>
